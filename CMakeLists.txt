@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.16)
+project(threadpool)
+add_subdirectory(src)
+add_subdirectory(libThreadPool)
+#SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-pthread")
