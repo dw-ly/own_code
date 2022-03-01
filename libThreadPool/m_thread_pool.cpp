@@ -1,4 +1,4 @@
-#include "thread_pool.h"
+#include "m_thread_pool.h"
 
 void thread_pool::start()
 {
@@ -6,25 +6,21 @@ void thread_pool::start()
     for (int i = 0; i < max; i++)
     {
         // t[i] = thread(&rountine);
-    	printf("add rountine\n");
+    	// printf("add rountine\n");
         threads.emplace_back(thread(&thread_pool::rountine, this));
     }
 }
 void thread_pool::stop()
 {
     unique_lock<std::mutex> lk(m_lock);
-    printf("this is stop\n");
+    // printf("this is stop\n");
     cv.notify_all();
-    // for (auto &t : threads)
-    // {
-    //     t.join();
-    // }
     for (int i = 0; i < max; i++)
     {
         threads[i].join();
     }
     
-    printf("after join\n");
+    // printf("after join\n");
 
 }
 void thread_pool::add_task(Task task)
@@ -36,11 +32,7 @@ void thread_pool::add_task(Task task)
 }
 void thread_pool::rountine()
 {
-    printf("start new_routine\n");
-    // if (tasks.empty())
-    // {
-
-    // }
+    // printf("start new_routine\n");
     
     while (1)
     {
@@ -49,7 +41,6 @@ void thread_pool::rountine()
         if(tasks.empty())
         {
             cv.wait(lk);
-            // this_thread::yield();
         }
         else
         {
@@ -57,7 +48,6 @@ void thread_pool::rountine()
             tasks.pop();
 		    printf("start task\n");
             task();
-            // this_thread::yield();
         }
         
     }

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-set(LIB_SRC thread_pool.cpp)
+set(LIB_SRC m_thread_pool.cpp)
 add_library(libThreadPool ${LIB_SRC}) #.a
 #add_library(libhello SHARED ${LIB_SRC}) #.so
 #设置输出位置
