@@ -33,8 +33,10 @@ void thread_pool::add_task(Task task)
 void thread_pool::rountine(int i)
 {
     // printf("start new_routine\n");
-    //string s = "mthread" + i;
-    prctl(PR_SET_NAME, "mthread" + i);
+    string s = "mthread";
+    s += (++i+'0');
+    printf("%s\n",s.c_str());
+    prctl(PR_SET_NAME, s.c_str());
     while (1)
     {
         // printf("--------wait for task-------\n");
