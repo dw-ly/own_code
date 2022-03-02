@@ -7,7 +7,7 @@ void thread_pool::start()
     {
         // t[i] = thread(&rountine);
     	// printf("add rountine\n");
-        threads.emplace_back(thread(&thread_pool::rountine, this));
+        threads.emplace_back(thread(&thread_pool::rountine, this, i));
     }
 }
 void thread_pool::stop()
@@ -30,10 +30,11 @@ void thread_pool::add_task(Task task)
     tasks.emplace(task);
     cv.notify_one();
 }
-void thread_pool::rountine()
+void thread_pool::rountine(int i)
 {
     // printf("start new_routine\n");
-    
+    //string s = "mthread" + i;
+    prctl(PR_SET_NAME, "mthread" + i);
     while (1)
     {
         // printf("--------wait for task-------\n");

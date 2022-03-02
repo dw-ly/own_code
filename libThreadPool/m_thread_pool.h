@@ -8,6 +8,7 @@
 #include <thread>
 #include <vector>
 #include <ctime>
+#include <sys/prctl.h>
 using namespace std;
 #define MAX_THREAD_NUM thread::hardware_concurrency();
 using Task = function<void()>;
@@ -26,7 +27,7 @@ public:
     void start();
     void stop();
     void add_task(Task task);
-    void rountine();
+    void rountine(int i);
 };
 
 
