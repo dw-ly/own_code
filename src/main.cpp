@@ -1,7 +1,8 @@
 #include <iostream>
 #include "m_thread_pool.h"
 #include "spdlog_common.h"
-
+#include <amqpcpp.h>
+#include <amqpcpp/libevent.h>
 // void print(int time)
 // {
 // 	printf("this is task,task_time = %d,thread_id = %d\n", time, this_thread::get_id());
