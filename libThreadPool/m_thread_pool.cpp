@@ -26,7 +26,7 @@ void thread_pool::stop()
 void thread_pool::add_task(Task task)
 {
     unique_lock<std::mutex> lk(m_lock);
-    printf("this is add_task\n");
+    //printf("this is add_task\n");
     tasks.emplace(task);
     cv.notify_one();
 }
@@ -46,7 +46,7 @@ void thread_pool::rountine()
         {
             auto task = tasks.front();
             tasks.pop();
-		    printf("start task\n");
+		    //printf("start task\n");
             task();
         }
         

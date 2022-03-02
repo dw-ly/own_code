@@ -1,6 +1,7 @@
 #include <iostream>
 #include "m_thread_pool.h"
 #include "spdlog_common.h"
+
 #include <amqpcpp.h>
 #include <amqpcpp/libevent.h>
 // void print(int time)
@@ -8,18 +9,21 @@
 // 	printf("this is task,task_time = %d,thread_id = %d\n", time, this_thread::get_id());
 //     usleep(time);
 // }
-
-void transfer(int time)
+mutex fun_lock;
+int transfers = 0;
+void transfer(int &time)
 {
-    time++;
+    lock_guard<mutex> guard(fun_lock);
+    transfers += time;
+    //printf("transfer %d\n", transfers);
     SPDLOG_INFO_FILE("transfer %d", time);
 }
 int main()
 {
+    int money = 1;
     thread_pool pool;
-    int money = 0;
     printf("main start\n");
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 10000; i++)
     {
         Task t = bind(transfer, money);
         pool.add_task(t);
