@@ -29,7 +29,7 @@ public:
     void start();
     void stop();
     void add_task(Task task, int num/*test*/);
-    void rountine(int i);
+    void rountine(int tid);
 };
 
 

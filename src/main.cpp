@@ -15,7 +15,7 @@ void transfer(int &time)
 {
     lock_guard<mutex> guard(fun_lock);
     transfers += time;
-    // printf("transfer %d\n", transfers);
+    printf("transfer %d\n", transfers);
     // SPDLOG_INFO_FILE("transfer: {}", transfers);
 }
 int main()
