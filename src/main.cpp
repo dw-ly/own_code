@@ -30,7 +30,7 @@ int main()
     for (int i = 0; i < 10000; i++)
     {
         Task t = bind(transfer, money);
-        pool.add_task(t);
+        pool.add_task(t, i);
     }
 
     printf("main add_task\n");

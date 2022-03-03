@@ -17,24 +17,31 @@ void thread_pool::stop()
     cv.notify_all();
     for (int i = 0; i < max; i++)
     {
-        threads[i].join();
+        if (threads[i].joinable())// 等待任务结束， 前提：线程一定会执行完
+        {
+            threads[i].join();
+        }
     }
     
     // printf("after join\n");
 
 }
-void thread_pool::add_task(Task task)
+void thread_pool::add_task(Task task, int num)
 {
     unique_lock<std::mutex> lk(m_lock);
-    //printf("this is add_task\n");
+    // printf("this is add_task:%d\n", num);
     tasks.emplace(task);
-    cv.notify_one();
+    if (freeNum > 0)
+    {
+        cv.notify_one();
+    }
 }
 void thread_pool::rountine(int i)
 {
     // printf("start new_routine\n");
     string s = "mthread";
-    s += (++i+'0');
+    // s += (++i+'0');//char
+    s += to_string(i++);//int
     printf("%s\n",s.c_str());
     prctl(PR_SET_NAME, s.c_str());
     while (1)
@@ -47,10 +54,20 @@ void thread_pool::rountine(int i)
         }
         else
         {
-            auto task = tasks.front();
-            tasks.pop();
-		    //printf("start task\n");
-            task();
+            if (freeNum > 0)
+            {
+                auto task = move(tasks.front());
+                tasks.pop();
+                //printf("start task\n");
+                freeNum--;
+                task();
+                freeNum++;
+            }
+            else
+            {
+                //sleep(0);
+                cv.wait(lk);
+            }
         }
         
     }
@@ -60,6 +77,7 @@ thread_pool::thread_pool(/* args */)
 {
     max = MAX_THREAD_NUM;
     done = false;
+    freeNum = MAX_THREAD_NUM;
     printf("max thread num = %d\n", max);
     start();
 }
