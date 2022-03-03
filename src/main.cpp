@@ -18,15 +18,14 @@ void transfer(int &time)
     printf("transfer %d\n", transfers);
     // SPDLOG_INFO_FILE("transfer: {}", transfers);
 }
+
 int main()
 {
     prctl(PR_SET_NAME, "mthreadm");
-//    string s;
-//    prctl(PR_GET_NAME, s);
-//    printf("%s", s.c_str());
-    int money = 1;
     printf("main start\n");
     thread_pool pool;
+
+    int money = 1;
     for (int i = 0; i < 10000; i++)
     {
         Task t = bind(transfer, money);
@@ -34,10 +33,8 @@ int main()
     }
 
     printf("main add_task\n");
-    usleep(100);
     pool.stop();
     printf("main stop\n");
-    usleep(100);
 
 }
 // int main()
