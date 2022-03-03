@@ -15,8 +15,8 @@ void transfer(int &time)
 {
     lock_guard<mutex> guard(fun_lock);
     transfers += time;
-    printf("transfer %d\n", transfers);
-    SPDLOG_INFO_FILE("transfer: {}", transfers);
+    // printf("transfer %d\n", transfers);
+    // SPDLOG_INFO_FILE("transfer: {}", transfers);
 }
 int main()
 {
@@ -25,8 +25,8 @@ int main()
 //    prctl(PR_GET_NAME, s);
 //    printf("%s", s.c_str());
     int money = 1;
-    thread_pool pool;
     printf("main start\n");
+    thread_pool pool;
     for (int i = 0; i < 10000; i++)
     {
         Task t = bind(transfer, money);

@@ -11,7 +11,7 @@
 #include <sys/prctl.h>
 #include <atomic>
 using namespace std;
-#define MAX_THREAD_NUM thread::hardware_concurrency();
+#define MAX_THREAD_NUM 8//thread::hardware_concurrency();
 using Task = function<void()>;
 class thread_pool
 {
