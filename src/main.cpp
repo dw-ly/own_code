@@ -1,9 +1,11 @@
 #include <iostream>
-#include "m_thread_pool.h"
-#include "spdlog_common.h"
-
 #include <amqpcpp.h>
 #include <amqpcpp/libevent.h>
+
+#include "m_thread_pool.h"
+#include "spdlog_common.h"
+#include "getAverageTimeContrast.h"
+
 // void print(int time)
 // {
 // 	printf("this is task,task_time = %d,thread_id = %d\n", time, this_thread::get_id());
@@ -15,10 +17,36 @@ void transfer(int &time)
 {
     lock_guard<mutex> guard(fun_lock);
     transfers += time;
-    printf("transfer %d\n", transfers);
+    if (transfers == 10000)
+    {
+        printf("transfers %d\n",transfers);
+    }
+    
+    // printf("transfer %d\n", transfers);
     // SPDLOG_INFO_FILE("transfer: {}", transfers);
 }
-
+void test_string_append()
+{
+    string s1 = "mthread";
+    string s2 = "mthread";
+    do_test(
+        [&s1]()
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                s1 += "s";
+            }
+            
+            
+        }, 
+        [&s2]()
+        {
+            for (size_t i = 0; i < 1; i++)
+            {
+                s2 = s2 + "s";
+            }
+        });
+}
 int main()
 {
     prctl(PR_SET_NAME, "mthreadm");
@@ -31,7 +59,12 @@ int main()
         Task t = bind(transfer, money);
         pool.add_task(t, i);
     }
-
+    sleep(10);
+    /* 
+        without sleep the main thread, 
+        there would be some threads join advance,
+        even before the tasks done.
+    */
     printf("main add_task\n");
     pool.stop();
     printf("main stop\n");
