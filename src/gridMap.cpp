@@ -1,19 +1,14 @@
 #include "gridMap.h"
 
-void gridMap::initStartAndEnd(Spot start, Spot end)
-{
-    m_start = move(start);
-    m_end = move(end);
-}
-
 gridMap::gridMap(int size)
 {
     m_size = size;
 }
 
-bool gridMap::checkSpot(Spot spot)
+void gridMap::init()
 {
-    return obstacleSpots.find(spot) == obstacleSpots.end();
+    initStartAndEnd();
+    initObstacle(OBSTACLE_COUNT);
 }
 
 void gridMap::initObstacle(int count)
@@ -24,4 +19,14 @@ void gridMap::initObstacle(int count)
         int r_y = rand();
         obstacleSpots.emplace(Spot(r_x, r_y));    
     }
+}
+void gridMap::initStartAndEnd(Spot start, Spot end)
+{
+    m_start = move(start);
+    m_end = move(end);
+}
+
+bool gridMap::checkSpot(Spot spot)
+{
+    return obstacleSpots.find(spot) == obstacleSpots.end();
 }

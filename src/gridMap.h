@@ -24,6 +24,7 @@ public:
     bool checkSpot(Spot spot);
     void initObstacle(int count);
     void initStartAndEnd(Spot start = Spot(0, 0), Spot end = Spot(MAX_MAP_SIZE - 1, MAX_MAP_SIZE - 1));
+    void init();
 private:
     int m_size;
     Spot m_start;//不带参数会提示没有默认构造函数，或者添加一个默认构造函数
