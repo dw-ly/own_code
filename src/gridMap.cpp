@@ -1,5 +1,11 @@
 #include "gridMap.h"
 
+void gridMap::initStartAndEnd(Spot start, Spot end)
+{
+    m_start = move(start);
+    m_end = move(end);
+}
+
 gridMap::gridMap(int size)
 {
     m_size = size;
