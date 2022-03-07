@@ -1,31 +1,28 @@
 #include <iostream>
-struct spot
+#include <set>
+
+#define MAX_MAP_SIZE 10
+using namespace std;
+struct Spot
 {
     int m_x;
     int m_y;
     bool is_obstacle;
-    spot(int x, int y):m_x(x), m_y(y), is_obstacle(false){};
-    bool operator == (spot a, spot b){return a.m_x == b.m_x && a.m_y == b.m_y};
-}
+    Spot(int x, int y):m_x(x), m_y(y), is_obstacle(false){};
+    bool operator == (Spot spot){return spot.m_x == m_x && spot.m_y == m_y;};
+};
 
 class gridMap
 {
 public:
     gridMap(int size);
     ~gridMap() = default;
-    checkSpot(int x, int y);
-    initObstacle();
+    bool checkSpot(Spot spot);
+    void initObstacle(int count);
 private:
     int m_size;
-    map<spot, bool> maps;
+    set<Spot> obstacleSpots;
+    // map<Spot, bool> mapSpots;
 
 };
 
-gridMap(int size)
-{
-    m_size = size;
-}
-checkSpot(int x, int y)
-{
-
-}
