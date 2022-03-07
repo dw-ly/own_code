@@ -1,4 +1,4 @@
-#include "A*.h"
+#include "gridMap.h"
 
 gridMap::gridMap(int size)
 {
