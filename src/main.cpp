@@ -6,6 +6,8 @@
 #include "spdlog_common.h"
 #include "getAverageTimeContrast.h"
 
+#include "net/tcpClient.h"
+#include "net/tcpServer.h"
 // void print(int time)
 // {
 // 	printf("this is task,task_time = %d,thread_id = %d\n", time, this_thread::get_id());
@@ -53,20 +55,29 @@ int main()
     printf("main start\n");
     thread_pool pool;
 
-    int money = 1;
-    for (int i = 0; i < 10000; i++)
-    {
-        Task t = bind(transfer, money);
-        pool.add_task(t, i);
-    }
-    sleep(10);
+    // int money = 1;
+    // for (int i = 0; i < 10000; i++)
+    // {
+    //     Task t = bind(transfer, money);
+    //     pool.add_task(t, i);
+    // }
+    // sleep(10);
+
+
+    Task t1 = bind(tcp_epoll_server_init);
+    pool.add_task(t1, 1);
+    sleep(2);
+    // tcp_epoll_server_init();
+    // initTcpClient();
+    Task t2 = bind(initTcpClient);
+    pool.add_task(t2, 2);
     /* 
         without sleep the main thread, 
         there would be some threads join advance,
         even before the tasks done.
     */
     printf("main add_task\n");
-    pool.stop();
+    // pool.stop();
     printf("main stop\n");
 
 }
