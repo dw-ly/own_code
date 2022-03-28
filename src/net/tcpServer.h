@@ -33,8 +33,8 @@ int tcp_epoll_server_init(){
 	
 	
 	serv_addr.sin_family = AF_INET;
-	serv_addr.sin_port = htons(SIN_PORT1);//SERV_PORT
-	serv_addr.sin_addr.s_addr = inet_addr("10.0.12.17");//htonl(SIN_ADDR1);// 任意本地ip INADDR_ANY
+	serv_addr.sin_port = htons(SERV_PORT);//SERV_PORT
+	serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);//inet_addr("10.0.12.17");//htonl(SIN_ADDR1);// 任意本地ip INADDR_ANY
 	// inet_pton(AF_INET, SIN_ADDR1, &serv_addr.sin_addr.s_addr);
 	int ret = bind(sockfd,(struct sockaddr*)&serv_addr,sizeof(serv_addr));
 	if(ret == -1){
